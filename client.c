@@ -10,7 +10,7 @@
 
 #include <arpa/inet.h>
 
-#define PORT 2022 
+#define PORT 2345 
 #define BUF_SIZE 1024 
 
 //Même structure que server
@@ -40,7 +40,7 @@ int main(int argc, char**argv) {
  	addr.sin_addr.s_addr = inet_addr(serverAddr);
  	addr.sin_port = PORT;     
 
- 	ret = connect(sockfd, (struct sockaddr *) &addr, sizeof(addr));  
+ 	ret = connect(sockfd, (struct sockaddr *) &addr, sizeof(addr) < 0);  
  	if (ret < 0) 
  	{  
   		printf("Error connecting to the server!\n");  
