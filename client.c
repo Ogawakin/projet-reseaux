@@ -14,15 +14,13 @@
 #define BUF_SIZE 1024 
 
 //Même structure que server
-int main(int argc, char**argv) 
-{  
+int main(int argc, char**argv) {  
  	struct sockaddr_in addr;  
  	int sockfd, ret;  
  	char buffer[BUF_SIZE];
  	char * serverAddr;
 
- 	if (argc < 2) 
- 	{
+ 	if (argc < 2) {
   		printf("Usage: client <IP address>\n");
   		exit(1); 
  	}
