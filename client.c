@@ -11,18 +11,17 @@
 #include <arpa/inet.h>
 
 #define PORT 2345 
-#define BUF_SIZE 1024 
+#define BUFFER_SIZE 1024
 
 //Même structure que server
-int main(int argc, char**argv) 
-{  
+int main(int argc, char**argv) {
  	struct sockaddr_in addr;  
- 	int sockfd;  
- 	char buffer[BUF_SIZE];
- 	char * serverAddr;
+ 	int sockfd;
 
- 	if (argc < 2) 
- 	{
+ 	char buffer[BUFFER_SIZE];
+ 	char *serverAddr;
+
+ 	if (argc < 2) {
   		printf("Usage: client <IP address>\n");
   		exit(1); 
  	}
@@ -30,8 +29,7 @@ int main(int argc, char**argv)
  	serverAddr = argv[1];
 
  	sockfd = socket(AF_INET, SOCK_STREAM, 0);  
- 	if (sockfd < 0) 
- 	{  
+ 	if (sockfd < 0) {
   		printf("Error creating socket!\n");  
   		exit(1);  
  	}  
@@ -42,27 +40,22 @@ int main(int argc, char**argv)
  	addr.sin_addr.s_addr = inet_addr(serverAddr);
  	addr.sin_port = PORT;     
  
- 	if (connect(sockfd, (struct sockaddr *) &addr, sizeof(addr)) < 0) 
- 	{  
+ 	if (connect(sockfd, (struct sockaddr *) &addr, sizeof(addr)) < 0) {
   		printf("Error connecting to the server!\n");  
   		exit(1);  
  	}  
  	printf("Connected to the server...\n");  
 
- 	memset(buffer, 0, BUF_SIZE);
+ 	memset(buffer, 0, BUFFER_SIZE);
  	printf("Enter your message(s): ");
 
- 	while (fgets(buffer, BUF_SIZE, stdin) != NULL) 
- 	{  
-  		if (sendto(sockfd, buffer, BUF_SIZE, 0, (struct sockaddr *) &addr, sizeof(addr)) < 0) 
-  		{  
+ 	while (fgets(buffer, BUFFER_SIZE, stdin) != NULL) {
+  		if (sendto(sockfd, buffer, BUFFER_SIZE, 0, (struct sockaddr *) &addr, sizeof(addr)) < 0) {
    			printf("Error sending data!\n\t-%s", buffer);  
   		} 
-  		if (recvfrom(sockfd, buffer, BUF_SIZE, 0, NULL, NULL) < 0) 
-  		{  
+  		if (recvfrom(sockfd, buffer, BUFFER_SIZE, 0, NULL, NULL) < 0) {
    			printf("Error receiving data!\n");    
-  		} else 
-  		{
+  		} else {
   		 	printf("Received: ");
    			fputs(buffer, stdout);
    			printf("\n");
