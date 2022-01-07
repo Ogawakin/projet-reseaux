@@ -71,22 +71,22 @@ int main() {
 
 			// Le serveur reçoit un message d'un client
 			if(recvfrom(newsockfd, buffer, BUFFER_SIZE, 0, (struct sockaddr *) &adresse_client, &len) < 0) {
-				printf("Error receiving data!\n");  
+				printf("Erreur durant la réception des données\n");
  				exit(1);
 			} else {
-                printf("Received data : %s\n", buffer);
+                printf("Données reçues: %s\n", buffer);
 			}
 
 
-			// Il retourne le message reçu à l'envoyeur
+			// et il renvoie le message à l'envoyeur
 			if (sendto(newsockfd, buffer, BUFFER_SIZE, 0, (struct sockaddr *) &adresse_client, len) < 0) {
- 				printf("Error sending data!\n");  
+ 				printf("Erreur dans l'envoi des données\n");
  				exit(1);  
 			} else {
-                printf("Sent data : %s\n", buffer);
+                printf("Données envoyées : %s\n", buffer);
 			}
 		}
  	}
- 	
+
  	return 0;
  }
