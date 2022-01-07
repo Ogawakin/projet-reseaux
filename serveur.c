@@ -58,31 +58,35 @@ int main() {
 
   		//On accepte la connexion d'un joueur 
   		newsockfd = accept(sockfd, (struct sockaddr *) &adresse_client, &len);
-  		if (newsockfd < 0) {
-   			printf("Error accepting connection!\n");
-   			exit(1);
-  		}
 
-  		printf("Connection accepted...\n");
+  		if (newsockfd < 0) {
+   			printf("Erreur durant l'acceptation de la connexion\n");
+   			exit(1);
+  		} else {
+            printf("Connexion acceptée avec succès\n");
+  		}
 
 		while (1) {
 			memset(buffer, 0, BUFFER_SIZE);
 
-			//Le serveur reçoit un message d'un client
+			// Le serveur reçoit un message d'un client
 			if(recvfrom(newsockfd, buffer, BUFFER_SIZE, 0, (struct sockaddr *) &adresse_client, &len) < 0) {
 				printf("Error receiving data!\n");  
  				exit(1);
+			} else {
+                printf("Received data : %s\n", buffer);
 			}
 
-			printf("Received data : %s\n", buffer);
 
-			//Il retourne le message reçu à l'envoyeur   
+			// Il retourne le message reçu à l'envoyeur
 			if (sendto(newsockfd, buffer, BUFFER_SIZE, 0, (struct sockaddr *) &adresse_client, len) < 0) {
  				printf("Error sending data!\n");  
  				exit(1);  
-			}  
-			printf("Sent data : %s\n", buffer);
+			} else {
+                printf("Sent data : %s\n", buffer);
+			}
 		}
  	}
+ 	
  	return 0;
  }
