@@ -13,7 +13,7 @@
 #define PORT 2345 
 #define BUFFER_SIZE 1024
 
-//Même structure que server
+//Même structure que serveur
 int main(int argc, char**argv) {
  	struct sockaddr_in addr;  
  	int sockfd;
