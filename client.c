@@ -13,7 +13,6 @@
 #define PORT 2345 
 #define BUFFER_SIZE 1024
 
-//Même structure que serveur
 int main(int argc, char**argv) {
  	struct sockaddr_in addr;  
  	int sockfd;
@@ -23,10 +22,11 @@ int main(int argc, char**argv) {
 
  	sockfd = socket(AF_INET, SOCK_STREAM, 0);  
  	if (sockfd < 0) {
-  		printf("Error creating socket!\n");  
+  		printf("Erreur durant la création de socket\n");
   		exit(1);  
- 	}  
- 	printf("Socket created...\n");   
+ 	} else {
+        printf("La socket a bien été créée\n");
+    }
 
  	memset(&addr, 0, sizeof(addr));  
  	addr.sin_family = AF_INET;  
