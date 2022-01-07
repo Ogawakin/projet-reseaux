@@ -34,22 +34,23 @@ int main(int argc, char**argv) {
  	adresse.sin_port = PORT;     
  
  	if (connect(sockfd, (struct sockaddr *) &adresse, sizeof(adresse)) < 0) {
-  		printf("Error connecting to the server!\n");  
+  		printf("Error durant la connexion au serveur !\n");
   		exit(1);  
- 	}  
- 	printf("Connected to the server...\n");  
+ 	}  else {
+        printf("Connecté au serveur\n");
+    }
 
  	memset(buffer, 0, BUFFER_SIZE);
- 	printf("Enter your message(s): ");
+ 	printf("Entrez votre message : ");
 
  	while (fgets(buffer, BUFFER_SIZE, stdin) != NULL) {
   		if (sendto(sockfd, buffer, BUFFER_SIZE, 0, (struct sockaddr *) &adresse, sizeof(adresse)) < 0) {
-   			printf("Error sending data!\n\t-%s", buffer);  
+   			printf("Erreur durant l'envoi des données\n\t-%s", buffer);
   		} 
   		if (recvfrom(sockfd, buffer, BUFFER_SIZE, 0, NULL, NULL) < 0) {
-   			printf("Error receiving data!\n");    
+   			printf("Error durant la réception des données\n");
   		} else {
-  		 	printf("Received: ");
+  		 	printf("Bien reçu : ");
    			fputs(buffer, stdout);
    			printf("\n");
   		}  
