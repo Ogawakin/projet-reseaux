@@ -31,7 +31,7 @@ int main() {
  	memset(&addr, 0, sizeof(addr));
  	addr.sin_family = AF_INET;
  	addr.sin_addr.s_addr = INADDR_ANY;
- 	addr.sin_port = PORT; //htons?
+ 	addr.sin_port = PORT;
 
  	//Connexion/Liaison
  	if (bind(sockfd, (struct sockaddr *) &addr, sizeof(addr)) < 0) {
