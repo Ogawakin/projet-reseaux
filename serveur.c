@@ -38,19 +38,22 @@ int main() {
  	adresse.sin_addr.s_addr = INADDR_ANY;
  	adresse.sin_port = PORT;
 
- 	//Connexion/Liaison
+ 	// Connexion/Liaison
  	if (bind(sockfd, (struct sockaddr *) &adresse, sizeof(adresse)) < 0) {
- 		printf("Error binding!\n");
+ 		printf("Erreur pendant la liaison\n");
   		exit(1);
+ 	} else {
+        printf("Liaison effectuée avec succès\n");
  	}
- 	printf("Binding done...\n");
 
-	//Mise en place de l'écoute du serveur
- 	printf("Waiting for a connection...\n");
- 	listen(sockfd, 5); //Cinq joueurs max
+	// Mise en place de l'écoute du serveur
+ 	printf("En attente d'une connexion.\n");
 
-	//Tant que le serveur est en écoute:
- 	while(1) {
+    // Deux joueurs maximum
+ 	listen(sockfd, 2);
+
+	// Tant que le serveur est en écoute:
+ 	while (1) {
   		len = sizeof(adresse_client);
 
   		//On accepte la connexion d'un joueur 
@@ -62,7 +65,7 @@ int main() {
 
   		printf("Connection accepted...\n");
 
-		while(1) {
+		while (1) {
 			memset(buffer, 0, BUFFER_SIZE);
 
 			//Le serveur reçoit un message d'un client
