@@ -19,14 +19,7 @@ int main(int argc, char**argv) {
  	int sockfd;
 
  	char buffer[BUFFER_SIZE];
- 	char *serverAddr;
-
- 	if (argc < 2) {
-  		printf("Usage: client <IP address>\n");
-  		exit(1); 
- 	}
-
- 	serverAddr = argv[1];
+ 	char *serverAddr = "127.0.0.1";
 
  	sockfd = socket(AF_INET, SOCK_STREAM, 0);  
  	if (sockfd < 0) {
