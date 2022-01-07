@@ -14,7 +14,157 @@
 #define BUFFER_SIZE 1024
 #define CLADDR_LEN 100
 
+char ** creation_plateau()
+{
+	char ** plateau = malloc(10 * sizeof(char *));
+	for(int i = 0; i < 10; i++)
+	{
+		plateau[i] = malloc(10 * sizeof(char));
+		switch(i)
+		{
+			case 0:
+				for(int j = 0; j < 10; j++)
+				{
+					if((j=1) || (j=3) || (j=5) || (j=7) || (j=9))
+					{
+						plateau[i][j] = 'P';
+					}
+					else
+					{
+						plateau[i][j] = '.';
+					}
+				}
+				break;
+			
+			case 1:
+				for(int j = 0; j < 10; j++)
+				{
+					if((j=0) || (j=2) || (j=4) || (j=6) || (j=8))
+					{
+						plateau[i][j] = 'P';
+					}
+					else
+					{
+						plateau[i][j] = '.';
+					}
+				}
+				break;
+			
+			case 2:
+				for(int j = 0; j < 10; j++)
+				{
+					if((j=1) || (j=3) || (j=5) || (j=7) || (j=9))
+					{
+						plateau[i][j] = 'P';
+					}
+					else
+					{
+						plateau[i][j] = '.';
+					}
+				}
+				break;
+			
+			case 3:
+				for(int j = 0; j < 10; j++)
+				{
+					if((j=0) || (j=2) || (j=4) || (j=6) || (j=8))
+					{
+						plateau[i][j] = 'P';
+					}
+					else
+					{
+						plateau[i][j] = '.';
+					}
+				}
+				break;
+			
+			case 6:
+				for(int j = 0; j < 10; j++)
+				{
+					if((j=0) || (j=2) || (j=4) || (j=6) || (j=8))
+					{
+						plateau[i][j] = 'V';
+					}
+					else
+					{
+						plateau[i][j] = '.';
+					}
+				}
+				break;
+			
+			case 7:
+				for(int j = 0; j < 10; j++)
+				{
+					if((j=1) || (j=3) || (j=5) || (j=7) || (j=9))
+					{
+						plateau[i][j] = 'V';
+					}
+					else
+					{
+						plateau[i][j] = '.';
+					}
+				}
+				break;
+			
+			case 8:
+				for(int j = 0; j < 10; j++)
+				{
+					if((j=0) || (j=2) || (j=4) || (j=6) || (j=8))
+					{
+						plateau[i][j] = 'V';
+					}
+					else
+					{
+						plateau[i][j] = '.';
+					}
+				}
+				break;
+			
+			case 9:
+				for(int j = 0; j < 10; j++)
+				{
+					if((j=1) || (j=3) || (j=5) || (j=7) || (j=9))
+					{
+						plateau[i][j] = 'V';
+					}
+					else
+					{
+						plateau[i][j] = '.';
+					}
+				}
+				break;
+			
+			default:
+				for(int j = 0; j < 10; j++)
+				{
+					plateau[i][j] = '.';
+				}
+				break;
+		}
+	}
+
+	return plateau;
+}
+
+void afficher_plateau(char ** plateau)
+{
+	for(int i = 0; i < 10; i++)
+	{
+		for(int j = 0; j < 10; j++)
+		{
+			printf("%c", plateau[i][j]);
+		}
+		printf("\n");
+	}
+}
+
 int main() {
+
+	// Création du plateau de jeu
+	// '.' signifie case vide et 'Px' (ou 'D' si c'est une dame) signifie case avec une pion
+	char ** plateau = creation_plateau();
+	afficher_plateau(plateau);
+
 	struct sockaddr_in adresse, adresse_client;
 	socklen_t len;
  	int sockfd, newsockfd;
@@ -43,7 +193,8 @@ int main() {
  	if (bind(sockfd, (struct sockaddr *) &adresse, sizeof(adresse)) < 0) {
  		printf("Erreur pendant la liaison\n");
   		exit(1);
- 	} else {
+ 	} 
+	else {
         printf("Liaison effectuée avec succès\n");
  	}
 
@@ -86,6 +237,10 @@ int main() {
 			} else {
                 printf("Données envoyées : %s\n", buffer);
 			}
+
+			// traitement du coup demandé
+
+
 		}
  	}
 
