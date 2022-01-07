@@ -39,7 +39,7 @@ int main(int argc, char**argv) {
  	adresse.sin_port = PORT;     
  
  	if (connect(sockfd, (struct sockaddr *) &adresse, sizeof(adresse)) < 0) {
-  		printf("Error durant la connexion au serveur !\n");
+  		printf("Erreur durant la connexion au serveur !\n");
   		exit(1);  
  	}  else {
         printf("Connecté au serveur\n");
@@ -53,7 +53,7 @@ int main(int argc, char**argv) {
    			printf("Erreur durant l'envoi des données\n\t-%s", buffer);
   		} 
   		if (recvfrom(sockfd, buffer, BUFFER_SIZE, 0, NULL, NULL) < 0) {
-   			printf("Error durant la réception des données\n");
+   			printf("Erreur durant la réception des données\n");
   		} else {
   		 	printf("Bien reçu : ");
    			fputs(buffer, stdout);
