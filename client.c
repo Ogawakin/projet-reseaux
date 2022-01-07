@@ -14,7 +14,7 @@
 #define BUFFER_SIZE 1024
 
 int main(int argc, char**argv) {
- 	struct sockaddr_in addr;  
+ 	struct sockaddr_in adresse;
  	int sockfd;
 
  	char buffer[BUFFER_SIZE];
@@ -28,12 +28,12 @@ int main(int argc, char**argv) {
         printf("La socket a bien été créée\n");
     }
 
- 	memset(&addr, 0, sizeof(addr));  
- 	addr.sin_family = AF_INET;  
- 	addr.sin_addr.s_addr = inet_addr(adresse_serveur);
- 	addr.sin_port = PORT;     
+ 	memset(&adresse, 0, sizeof(adresse));  
+ 	adresse.sin_family = AF_INET;  
+ 	adresse.sin_addr.s_addr = inet_addr(adresse_serveur);
+ 	adresse.sin_port = PORT;     
  
- 	if (connect(sockfd, (struct sockaddr *) &addr, sizeof(addr)) < 0) {
+ 	if (connect(sockfd, (struct sockaddr *) &adresse, sizeof(adresse)) < 0) {
   		printf("Error connecting to the server!\n");  
   		exit(1);  
  	}  
@@ -43,7 +43,7 @@ int main(int argc, char**argv) {
  	printf("Enter your message(s): ");
 
  	while (fgets(buffer, BUFFER_SIZE, stdin) != NULL) {
-  		if (sendto(sockfd, buffer, BUFFER_SIZE, 0, (struct sockaddr *) &addr, sizeof(addr)) < 0) {
+  		if (sendto(sockfd, buffer, BUFFER_SIZE, 0, (struct sockaddr *) &adresse, sizeof(adresse)) < 0) {
    			printf("Error sending data!\n\t-%s", buffer);  
   		} 
   		if (recvfrom(sockfd, buffer, BUFFER_SIZE, 0, NULL, NULL) < 0) {
