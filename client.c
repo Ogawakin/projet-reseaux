@@ -10,7 +10,7 @@
 
 #include <arpa/inet.h>
 
-#define PORT 2345 
+#define PORT 2022
 #define BUFFER_SIZE 1024
 
 int main(int argc, char**argv) {
@@ -31,7 +31,7 @@ int main(int argc, char**argv) {
         printf("La socket a bien été créée\n");
     }
 
- 	
+
  	memset(&adresse, 0, sizeof(adresse));
 
  	adresse.sin_family = AF_INET;  

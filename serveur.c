@@ -9,7 +9,7 @@
 
 #include <arpa/inet.h>
 
-#define PORT 2345
+#define PORT 2022
 #define BUFFER_SIZE 1024
 #define CLADDR_LEN 100
 
@@ -31,8 +31,9 @@ int main() {
     }
 
 
- 	//Création de l'adresse du serveur
+ 	// Création de l'adresse du serveur
  	memset(&adresse, 0, sizeof(adresse));
+
  	adresse.sin_family = AF_INET;
  	adresse.sin_addr.s_addr = INADDR_ANY;
  	adresse.sin_port = PORT;
