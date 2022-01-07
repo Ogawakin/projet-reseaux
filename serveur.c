@@ -14,27 +14,31 @@
 #define CLADDR_LEN 100
 
 int main() {
-	struct sockaddr_in addr, cl_addr;
+	struct sockaddr_in adresse, adresse_client;
 	socklen_t len;
  	int sockfd, newsockfd;
  	char buffer[BUFFER_SIZE];
 
- 	//Création de la socket
+
+ 	// Création de la socket
  	sockfd = socket(AF_INET, SOCK_STREAM, 0);
- 	if (sockfd < 0)	{
- 		printf("Error creating socket!\n");
-  		exit(1);
- 	}
- 	printf("Socket created...\n");
+
+    if (sockfd < 0) {
+        printf("Erreur durant la création de socket\n");
+        exit(1);
+    } else {
+        printf("La socket a bien été créée\n");
+    }
+
 
  	//Création de l'adresse du serveur
- 	memset(&addr, 0, sizeof(addr));
- 	addr.sin_family = AF_INET;
- 	addr.sin_addr.s_addr = INADDR_ANY;
- 	addr.sin_port = PORT;
+ 	memset(&adresse, 0, sizeof(adresse));
+ 	adresse.sin_family = AF_INET;
+ 	adresse.sin_addr.s_addr = INADDR_ANY;
+ 	adresse.sin_port = PORT;
 
  	//Connexion/Liaison
- 	if (bind(sockfd, (struct sockaddr *) &addr, sizeof(addr)) < 0) {
+ 	if (bind(sockfd, (struct sockaddr *) &adresse, sizeof(adresse)) < 0) {
  		printf("Error binding!\n");
   		exit(1);
  	}
@@ -46,10 +50,10 @@ int main() {
 
 	//Tant que le serveur est en écoute:
  	while(1) {
-  		len = sizeof(cl_addr);
+  		len = sizeof(adresse_client);
 
   		//On accepte la connexion d'un joueur 
-  		newsockfd = accept(sockfd, (struct sockaddr *) &cl_addr, &len);
+  		newsockfd = accept(sockfd, (struct sockaddr *) &adresse_client, &len);
   		if (newsockfd < 0) {
    			printf("Error accepting connection!\n");
    			exit(1);
@@ -61,7 +65,7 @@ int main() {
 			memset(buffer, 0, BUFFER_SIZE);
 
 			//Le serveur reçoit un message d'un client
-			if(recvfrom(newsockfd, buffer, BUFFER_SIZE, 0, (struct sockaddr *) &cl_addr, &len) < 0) {
+			if(recvfrom(newsockfd, buffer, BUFFER_SIZE, 0, (struct sockaddr *) &adresse_client, &len) < 0) {
 				printf("Error receiving data!\n");  
  				exit(1);
 			}
@@ -69,7 +73,7 @@ int main() {
 			printf("Received data : %s\n", buffer);
 
 			//Il retourne le message reçu à l'envoyeur   
-			if (sendto(newsockfd, buffer, BUFFER_SIZE, 0, (struct sockaddr *) &cl_addr, len) < 0) {
+			if (sendto(newsockfd, buffer, BUFFER_SIZE, 0, (struct sockaddr *) &adresse_client, len) < 0) {
  				printf("Error sending data!\n");  
  				exit(1);  
 			}  
