@@ -10,53 +10,52 @@
 
 #include <arpa/inet.h>
 
-#define PORT 2345 
+#define PORT 2022
 #define BUFFER_SIZE 1024
 
-//Même structure que serveur
 int main(int argc, char**argv) {
- 	struct sockaddr_in addr;  
+ 	struct sockaddr_in adresse;
  	int sockfd;
 
  	char buffer[BUFFER_SIZE];
- 	char *serverAddr;
+ 	char *adresse_serveur = "127.0.0.1";
 
- 	if (argc < 2) {
-  		printf("Usage: client <IP address>\n");
-  		exit(1); 
- 	}
 
- 	serverAddr = argv[1];
+    // Création de la socket
+ 	sockfd = socket(AF_INET, SOCK_STREAM, 0);
 
- 	sockfd = socket(AF_INET, SOCK_STREAM, 0);  
  	if (sockfd < 0) {
-  		printf("Error creating socket!\n");  
+  		printf("Erreur durant la création de socket\n");
   		exit(1);  
- 	}  
- 	printf("Socket created...\n");   
+ 	} else {
+        printf("La socket a bien été créée\n");
+    }
 
- 	memset(&addr, 0, sizeof(addr));  
- 	addr.sin_family = AF_INET;  
- 	addr.sin_addr.s_addr = inet_addr(serverAddr);
- 	addr.sin_port = PORT;     
+
+ 	memset(&adresse, 0, sizeof(adresse));
+
+ 	adresse.sin_family = AF_INET;  
+ 	adresse.sin_addr.s_addr = inet_addr(adresse_serveur);
+ 	adresse.sin_port = PORT;     
  
- 	if (connect(sockfd, (struct sockaddr *) &addr, sizeof(addr)) < 0) {
-  		printf("Error connecting to the server!\n");  
+ 	if (connect(sockfd, (struct sockaddr *) &adresse, sizeof(adresse)) < 0) {
+  		printf("Erreur durant la connexion au serveur !\n");
   		exit(1);  
- 	}  
- 	printf("Connected to the server...\n");  
+ 	}  else {
+        printf("Connecté au serveur\n");
+    }
 
  	memset(buffer, 0, BUFFER_SIZE);
- 	printf("Enter your message(s): ");
+ 	printf("Entrez votre message : ");
 
  	while (fgets(buffer, BUFFER_SIZE, stdin) != NULL) {
-  		if (sendto(sockfd, buffer, BUFFER_SIZE, 0, (struct sockaddr *) &addr, sizeof(addr)) < 0) {
-   			printf("Error sending data!\n\t-%s", buffer);  
+  		if (sendto(sockfd, buffer, BUFFER_SIZE, 0, (struct sockaddr *) &adresse, sizeof(adresse)) < 0) {
+   			printf("Erreur durant l'envoi des données\n\t-%s", buffer);
   		} 
   		if (recvfrom(sockfd, buffer, BUFFER_SIZE, 0, NULL, NULL) < 0) {
-   			printf("Error receiving data!\n");    
+   			printf("Erreur durant la réception des données\n");
   		} else {
-  		 	printf("Received: ");
+  		 	printf("Bien reçu : ");
    			fputs(buffer, stdout);
    			printf("\n");
   		}  
