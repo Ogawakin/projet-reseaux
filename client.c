@@ -20,6 +20,8 @@ int main(int argc, char**argv) {
  	char buffer[BUFFER_SIZE];
  	char *adresse_serveur = "127.0.0.1";
 
+
+    // Création de la socket
  	sockfd = socket(AF_INET, SOCK_STREAM, 0);
 
  	if (sockfd < 0) {
@@ -29,6 +31,7 @@ int main(int argc, char**argv) {
         printf("La socket a bien été créée\n");
     }
 
+ 	
  	memset(&adresse, 0, sizeof(adresse));
 
  	adresse.sin_family = AF_INET;  
